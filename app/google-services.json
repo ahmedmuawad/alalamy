@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "949758864772",
+    "firebase_url": "https://tooot-b43de-default-rtdb.firebaseio.com",
+    "project_id": "tooot-b43de",
+    "storage_bucket": "tooot-b43de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949758864772:android:1315ea3c9c89db3ad741d1",
+        "android_client_info": {
+          "package_name": "com.tooot.stopgroup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949758864772-sn5k0c9ps9lm0dl61fbe5sfpon0t7b5v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFXHB1enuRUG9nyPcKZ7RRy-rGTttfOco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949758864772-sn5k0c9ps9lm0dl61fbe5sfpon0t7b5v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "949758864772-ann61oq93j2cotu1g921ouqdj8taja8t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tooot.stopgroup"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
