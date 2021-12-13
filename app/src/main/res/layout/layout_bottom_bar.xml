@@ -136,7 +136,7 @@
                         android:id="@+id/ivBottomWishList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_gray_wishlist" />
+                        app:srcCompat="@drawable/ic_baseline_category_24" />
 
                     <com.tooot.stopgroup.customview.textview.TextViewRegular
                         android:id="@+id/tvBottomWishList"

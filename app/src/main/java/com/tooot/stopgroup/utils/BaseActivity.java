@@ -406,7 +406,7 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onClick(View v) {
                 if (!activity.equals("wishList")) {
-                    Intent intent = new Intent(BaseActivity.this, WishListActivity.class);
+                    Intent intent = new Intent(BaseActivity.this, SearchCategoryListActivity.class);
                     startActivity(intent);
                     if (!activity.equals("home")) {
                         finish();
