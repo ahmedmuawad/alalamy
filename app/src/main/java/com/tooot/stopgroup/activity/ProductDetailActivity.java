@@ -298,8 +298,7 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
     @BindView(R.id.tvCart)
     TextViewBold tvCart;
 
-    @BindView(R.id.tvBuyNow)
-    TextViewBold tvBuyNow;
+
 
     @BindView(R.id.llAddToCart)
     LinearLayout llAddToCart;
@@ -328,6 +327,19 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
     @BindView(R.id.llColor)
     LinearLayout llColor;
 
+
+    @BindView(R.id.flQuantity)
+    LinearLayout flQuantity;
+
+    @BindView(R.id.removeQuantity)
+    ImageView removeQuantity;
+
+    @BindView(R.id.addQuantity)
+    ImageView addQuantity;
+
+    @BindView(R.id.tvQuantity)
+    TextViewBold tvQuantity;
+
     @BindView(R.id.tvSellerInfoTitle)
     TextViewMedium tvSellerInfoTitle;
 
@@ -343,8 +355,7 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
     @BindView(R.id.flAddToCart)
     FrameLayout flAddToCart;
 
-    @BindView(R.id.flBuyNow)
-    FrameLayout flBuyNow;
+
 
     private boolean isDialogOpen = false;
     private boolean isDeepLinking = false;
@@ -454,6 +465,18 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         initCollapsingToolbar();
+        findViewById(R.id.addQuantity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAddQuantity();
+            }
+        });
+        findViewById(R.id.removeQuantity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeQuantity();
+            }
+        });
     }
 
     @Override
@@ -573,7 +596,8 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
         tvTwo.setTextColor(Color.parseColor(getPreferences().getString(Constant.SECOND_COLOR, Constant.SECONDARY_COLOR)));
         tvOne.setTextColor(Color.parseColor(getPreferences().getString(Constant.SECOND_COLOR, Constant.SECONDARY_COLOR)));
         tvSellerInfoTitle.setTextColor(Color.parseColor(getPreferences().getString(Constant.SECOND_COLOR, Constant.SECONDARY_COLOR)));
-        tvBuyNow.setBackgroundColor(Color.parseColor(getPreferences().getString(Constant.SECOND_COLOR, Constant.SECONDARY_COLOR)));
+        tvQuantity.setTextColor(Color.parseColor(getPreferences().getString(Constant.SECOND_COLOR, Constant.SECONDARY_COLOR)));
+        //tvBuyNow.setBackgroundColor(Color.parseColor(getPreferences().getString(Constant.SECOND_COLOR, Constant.SECONDARY_COLOR)));
         String htmlPrice = "";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             htmlPrice = String.valueOf(Html.fromHtml(categoryList.priceHtml + "", Html.FROM_HTML_MODE_COMPACT));
@@ -581,13 +605,13 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
             htmlPrice = (Html.fromHtml(categoryList.priceHtml) + "");
         }
         if (Config.IS_CATALOG_MODE_OPTION) {
-            flBuyNow.setVisibility(View.GONE);
+            //flBuyNow.setVisibility(View.GONE);
             flAddToCart.setVisibility(View.GONE);
         } else if (htmlPrice.equals("") && categoryList.price.equals("")) {
-            flBuyNow.setVisibility(View.GONE);
+            //flBuyNow.setVisibility(View.GONE);
             flAddToCart.setVisibility(View.GONE);
         } else {
-            flBuyNow.setVisibility(View.VISIBLE);
+            //flBuyNow.setVisibility(View.VISIBLE);
             flAddToCart.setVisibility(View.VISIBLE);
         }
 
@@ -753,8 +777,8 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
         } else {
             tvAvailibility.setText(R.string.out_of_stock);
             tvAvailibility.setTextColor(Color.RED);
-            tvBuyNow.setAlpha((float) 0.6);
-            tvBuyNow.setClickable(false);
+            /*tvBuyNow.setAlpha((float) 0.6);
+            tvBuyNow.setClickable(false);*/
             tvCart.setAlpha((float) 0.6);
             tvCart.setClickable(false);
             llAddToCart.setVisibility(View.GONE);
@@ -1213,7 +1237,7 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
     private void isGroupProductAddToCart() {
         for (int i = 0; i < categoryList.groupedProducts.size(); i++) {
             if (databaseHelper.getProductFromCartById(categoryList.groupedProducts.get(i) + "") != null) {
-                tvCart.setText(getResources().getString(R.string.go_to_cart));
+                //tvCart.setText(getResources().getString(R.string.go_to_cart));
             } else {
                 tvCart.setText(getResources().getString(R.string.add_to_Cart));
                 break;
@@ -1339,7 +1363,9 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
                 }
             }
             if (isallProductAdded) {
-                tvCart.setText(getResources().getString(R.string.go_to_cart));
+                //tvCart.setText(getResources().getString(R.string.go_to_cart));
+                flAddToCart.setVisibility(View.GONE);
+                flQuantity.setVisibility(View.VISIBLE);
             } else {
                 tvCart.setText(getResources().getString(R.string.add_to_Cart));
             }
@@ -1390,7 +1416,7 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
         startActivity(intent);
     }
 
-    @OnClick(R.id.tvBuyNow)
+    /*@OnClick(R.id.tvBuyNow)
     public void tvBuyNowClick() {
 
         if (categoryList.type.equals(RequestParamUtils.variable)) {
@@ -1451,7 +1477,7 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
                 }
             }
         }
-    }
+    }*/
 
     @OnClick(R.id.tvCart)
     public void tvCartClick() {
@@ -1466,15 +1492,17 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
                 if (getCartVariationProduct() != null) {
                     Cart cart = getCartVariationProduct();
                     if (databaseHelper.getVariationProductFromCart(cart)) {
-                        Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                        /*Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
                         intent.putExtra(RequestParamUtils.buynow, 0);
-                        startActivity(intent);
+                        startActivity(intent);*/
                     } else {
                         databaseHelper.addVariationProductToCart(getCartVariationProduct());
                         // showCart();
                         toast.showToast(getString(R.string.item_added_to_your_cart));
                         toast.showBlackbg();
-                        tvCart.setText(getResources().getString(R.string.go_to_cart));
+                        //tvCart.setText(getResources().getString(R.string.go_to_cart));
+                        flAddToCart.setVisibility(View.GONE);
+                        flQuantity.setVisibility(View.VISIBLE);
                     }
                 } else {
                     toast.showToast(getString(R.string.variation_not_available));
@@ -1493,15 +1521,16 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
             cart.setStockQuantity(categoryList.stockQuantity);
             if (databaseHelper.getProductFromCartById(categoryList.id + "") != null) {
                 databaseHelper.addToCart(cart);
-                Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                /*Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
                 intent.putExtra(RequestParamUtils.buynow, 0);
-                startActivity(intent);
+                startActivity(intent);*/
             } else {
                 databaseHelper.addToCart(cart);
                 // showCart();
                 toast.showToast(getString(R.string.item_added_to_your_cart));
                 toast.showBlackbg();
-                tvCart.setText(getResources().getString(R.string.go_to_cart));
+                flAddToCart.setVisibility(View.GONE);
+                flQuantity.setVisibility(View.VISIBLE);
             }
 
             String value = tvPrice1.getText().toString();
@@ -1543,16 +1572,17 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
                     if (databaseHelper.getProductFromCartById(groupProductAdapter.getList().get(i).id + "") != null) {
                         databaseHelper.addToCart(cart);
                         if (i == groupProductAdapter.getItemCount() - 1) {
-                            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                            /*Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
                             intent.putExtra(RequestParamUtils.buynow, 0);
-                            startActivity(intent);
+                            startActivity(intent);*/
                         }
                     } else {
                         databaseHelper.addToCart(cart);
                         //  showCart();
                         toast.showToast(getString(R.string.item_added_to_your_cart));
                         toast.showBlackbg();
-                        tvCart.setText(getResources().getString(R.string.go_to_cart));
+                        flAddToCart.setVisibility(View.GONE);
+                        flQuantity.setVisibility(View.VISIBLE);
                     }
 
                     String value = tvPrice1.getText().toString();
@@ -1575,6 +1605,42 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
             }
         }
     }
+
+
+    public void setAddQuantity(){
+        int quntity = Integer.parseInt(tvQuantity.getText().toString());
+        quntity = quntity + 1;
+
+        if (categoryList.manageStock) {
+            if (quntity > categoryList.stockQuantity) {
+                Toast.makeText(this, ((BaseActivity) this).getString(R.string.only) + " " + categoryList.stockQuantity + " " + ((BaseActivity) this).getString(R.string.quntity_is_avilable), Toast.LENGTH_SHORT).show();
+            } else {
+
+                tvQuantity.setText(quntity + "");
+                databaseHelper.updateQuantity(quntity, categoryList.id+"",  "0");
+
+
+            }
+        } else {
+            tvQuantity.setText(quntity + "");
+            databaseHelper.updateQuantity(quntity, categoryList.id+"",  "0");
+
+
+        }
+
+    }
+
+    public void removeQuantity(){
+        int quntity = Integer.parseInt(tvQuantity.getText().toString());
+        quntity = quntity - 1;
+        if (quntity < 1) {
+            quntity = 1;
+        }
+        tvQuantity.setText(quntity + "");
+        databaseHelper.updateQuantity(quntity, categoryList.id+"",  "0");
+
+    }
+
 
     public Cart getCartVariationProduct() {
         Log.e("getCartVariation", "called");
@@ -1867,10 +1933,10 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
         //   showCart();
         cart.setBuyNow(0);
         databaseHelper.addToCart(cart);
-        Intent intent = new Intent(this, CartActivity.class);
+        /*Intent intent = new Intent(this, CartActivity.class);
         intent.putExtra(RequestParamUtils.ID, categoryList.id + "");
         intent.putExtra(RequestParamUtils.buynow, 0);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
 
@@ -1889,15 +1955,15 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
                     if (CheckIsVariationAvailable.inStock && CheckIsVariationAvailable.stockQuantity != 0) {
                         tvAvailibility.setText(R.string.in_stock);
                         tvAvailibility.setTextColor(Color.parseColor(getPreferences().getString(Constant.SECOND_COLOR, Constant.SECOND_COLOR)));
-                        tvBuyNow.setClickable(true);
-                        tvBuyNow.setAlpha((float) 1.0);
+                        /*tvBuyNow.setClickable(true);
+                        tvBuyNow.setAlpha((float) 1.0);*/
                         tvCart.setClickable(true);
                         tvCart.setAlpha((float) 1.0);
                     } else {
                         tvAvailibility.setText(R.string.out_of_stock);
                         tvAvailibility.setTextColor(Color.RED);
-                        tvBuyNow.setAlpha((float) 0.6);
-                        tvBuyNow.setClickable(false);
+                        /*tvBuyNow.setAlpha((float) 0.6);
+                        tvBuyNow.setClickable(false);*/
                         tvCart.setAlpha((float) 0.6);
                         tvCart.setClickable(false);
                     }
@@ -1906,15 +1972,15 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
                     if (CheckIsVariationAvailable.inStock) {
                         tvAvailibility.setText(R.string.in_stock);
                         tvAvailibility.setTextColor(Color.parseColor(getPreferences().getString(Constant.SECOND_COLOR, Constant.SECOND_COLOR)));
-                        tvBuyNow.setClickable(true);
-                        tvBuyNow.setAlpha((float) 1.0);
+                        /*tvBuyNow.setClickable(true);
+                        tvBuyNow.setAlpha((float) 1.0);*/
                         tvCart.setClickable(true);
                         tvCart.setAlpha((float) 1.0);
                     } else {
                         tvAvailibility.setText(R.string.out_of_stock);
                         tvAvailibility.setTextColor(Color.RED);
-                        tvBuyNow.setAlpha((float) 0.6);
-                        tvBuyNow.setClickable(false);
+                        /*tvBuyNow.setAlpha((float) 0.6);
+                        tvBuyNow.setClickable(false);*/
                         tvCart.setAlpha((float) 0.6);
                         tvCart.setClickable(false);
                     }
@@ -1928,8 +1994,8 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
         } else {
             tvAvailibility.setText(R.string.out_of_stock);
             tvAvailibility.setTextColor(Color.RED);
-            tvBuyNow.setAlpha((float) 0.6);
-            tvBuyNow.setClickable(false);
+            /*tvBuyNow.setAlpha((float) 0.6);
+            tvBuyNow.setClickable(false);*/
             tvCart.setAlpha((float) 0.6);
             tvCart.setClickable(false);
         }
@@ -2026,7 +2092,8 @@ public class ProductDetailActivity extends BaseActivity implements OnItemClickLi
             }
 
             if (isallProductAdded) {
-                tvCart.setText(getResources().getString(R.string.go_to_cart));
+                flAddToCart.setVisibility(View.GONE);
+                flQuantity.setVisibility(View.VISIBLE);
             } else {
                 tvCart.setText(getResources().getString(R.string.add_to_Cart));
             }

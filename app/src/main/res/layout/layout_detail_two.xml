@@ -1106,31 +1106,7 @@
 
             </FrameLayout>
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5">
 
-                <com.tooot.stopgroup.customview.textview.TextViewBold
-                    android:id="@+id/tvBuyNow"
-                    style="@style/txt_white_medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@color/colorAccent"
-                    android:gravity="center"
-                    android:padding="@dimen/_10sdp"
-                    android:text="@string/buy_now" />
-
-
-                <ImageView
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:layout_gravity="start|center"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    app:srcCompat="@drawable/ic_cart_gray" />
-
-            </FrameLayout>
 
 
         </LinearLayout>

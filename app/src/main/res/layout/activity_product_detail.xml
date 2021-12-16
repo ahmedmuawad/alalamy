@@ -1083,9 +1083,11 @@
 
         <FrameLayout
             android:id="@+id/flAddToCart"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5">
+            android:visibility="visible"
+            >
 
             <com.tooot.stopgroup.customview.textview.TextViewBold
                 android:id="@+id/tvCart"
@@ -1107,33 +1109,52 @@
                 app:srcCompat="@drawable/ic_cart_white" />
 
         </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/flBuyNow"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5">
-
-            <com.tooot.stopgroup.customview.textview.TextViewBold
-                android:id="@+id/tvBuyNow"
-                style="@style/txt_white_medium"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@color/colorAccent"
-                android:gravity="center"
-                android:padding="@dimen/_10sdp"
-                android:text="@string/buy_now" />
-
-
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/flQuantity"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="3"
+            android:background="@color/black"
+            >
             <ImageView
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/remove_circle_24"
+                android:id="@+id/removeQuantity"
+                android:layout_weight="1.4"
                 android:layout_gravity="start|center"
-                android:layout_marginStart="@dimen/_20sdp"
-                app:srcCompat="@drawable/ic_cart_gray" />
+                android:layout_margin="@dimen/_15sdp"
 
-        </FrameLayout>
+                />
+            <com.tooot.stopgroup.customview.textview.TextViewBold
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/tvQuantity"
+                android:layout_weight="0.2"
+                android:text="1"
+                />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/add_circle_24"
+                android:id="@+id/addQuantity"
+                android:layout_gravity="start|center"
+                android:layout_margin="@dimen/_13sdp"
+                android:layout_weight="1.4"
+
+                />
+
+
+        </LinearLayout>
+
+
+
+
 
 
     </LinearLayout>
